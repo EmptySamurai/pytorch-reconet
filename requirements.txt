@@ -1,0 +1,6 @@
+torch >= 1.4.0
+torchvision
+numpy
+opencv-python
+Pillow
+tensorboard >= 1.14

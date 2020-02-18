@@ -2,6 +2,8 @@
 This is PyTorch implementation of
  "[ReCoNet: Real-time Coherent Video Style Transfer Network](https://arxiv.org/abs/1807.01197)" paper. 
 
+This model allows to perform style transfer on videos in real-time and preserve temporal consistency between frames.   
+
 ## Training
 To train a model:
 
@@ -23,13 +25,30 @@ that accepts a batch of images as 4-D uint8 NHWC RGB numpy tensor and stylizes i
 `python style_video.py input.mp4 output.mp4 model.pth`. It also supports some additional arguments.
 Note that you will need `ffmpeg` to be installed on your machine to run this script
 
-Pre-trained on `./styles/mosaic_2.jpg` model can be downloaded from here:
+Pre-trained on `./styles/mosaic_2.jpg` model can be downloaded from here:  
 https://drive.google.com/open?id=1MUPb7qf3QWEixZ6daGGI4lVFGmQl0qna 
  
-Example video with this model:
+Example video with this model:  
 https://youtu.be/rEJrNL_2Lfs
  
- 
+## Bubble Artifacts
+
+Training model as described in paper leads to bubble artifacts
+
+![Bubble artifacts](https://github.com/EmptySamurai/pytorch-reconet/blob/master/bubble_artifacts.jpg?raw=true)
+
+This issue was addressed in [StyleGAN2 paper](https://arxiv.org/abs/1912.04958) by NVIDIA team. 
+They discovered that artifacts appear because of Instance Normalization.
+They also proposed a novel normalization method, but unfortunately it doesn't work good with ReCoNet architecture —
+either style and content losses didn't converge or some blurry artifacts appeared.
+
+Instead of that in this implementation a [Filter Response Normalization with Thresholded Linear Unit](https://arxiv.org/abs/1911.09737) can be used.
+It acts similar to Instance Normalization but preserves mean values in some sense.
+This normalization leads to the same results as original architecture, but lacks bubble artifacts.
+Every script and class supports `frn` argument that enables Filter Response Normalization instead of Instance Normalization and also replaces ReLU by TLU.
+
+Pre-trained on `./styles/mosaic_2.jpg` model with FRN can be downloaded from here:    
+https://drive.google.com/open?id=1MUPb7qf3QWEixZ6daGGI4lVFGmQl0qna
 
 ## Notes
 

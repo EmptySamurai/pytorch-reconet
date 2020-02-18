@@ -22,12 +22,13 @@ if __name__ == "__main__":
     parser.add_argument("--gpu-device", type=int, default=None, help="GPU device index")
     parser.add_argument("--batch-size", type=int, default=2, help="Batch size")
     parser.add_argument("--fps", type=int, default=None, help="FPS of output video")
+    parser.add_argument("--frn", action='store_true', help="Use Filter Response Normalization and TLU ")
 
     args = parser.parse_args()
 
     batch_size = args.batch_size
 
-    model = ReCoNetModel(args.model, use_gpu=not args.use_cpu, gpu_device=args.gpu_device)
+    model = ReCoNetModel(args.model, use_gpu=not args.use_cpu, gpu_device=args.gpu_device, frn=args.frn)
 
     reader = VideoReader(args.input, fps=args.fps)
 

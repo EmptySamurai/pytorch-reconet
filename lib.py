@@ -14,12 +14,12 @@ sys.path.remove(current_dir)
 
 class ReCoNetModel:
 
-    def __init__(self, state_dict_path, use_gpu=True, gpu_device=None):
+    def __init__(self, state_dict_path, use_gpu=True, gpu_device=None, frn=False):
         self.use_gpu = use_gpu
         self.gpu_device = gpu_device
 
         with self.device():
-            self.model = ReCoNet()
+            self.model = ReCoNet(frn=frn)
             self.model.load_state_dict(torch.load(state_dict_path))
             self.model = self.to_device(self.model)
             self.model.eval()

@@ -105,6 +105,7 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=2, help="Number of epochs")
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
     parser.add_argument("--output-file", default="./model.pth", help="Output model file path")
+    parser.add_argument("--frn", action='store_true', help="Use Filter Response Normalization and TLU")
 
     args = parser.parse_args()
 
@@ -128,7 +129,7 @@ if __name__ == "__main__":
                                                 pin_memory=True,
                                                 drop_last=True)
 
-        model = ReCoNet().cuda()
+        model = ReCoNet(frn=args.frn).cuda()
         vgg = Vgg16().cuda()
 
         with torch.no_grad():

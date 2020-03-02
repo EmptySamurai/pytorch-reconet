@@ -48,7 +48,7 @@ This normalization leads to the same results as original architecture, but lacks
 Every script and class supports `frn` argument that enables Filter Response Normalization instead of Instance Normalization and also replaces ReLU by TLU.
 
 Pre-trained on `./styles/mosaic_2.jpg` model with FRN can be downloaded from here:    
-https://drive.google.com/open?id=1MUPb7qf3QWEixZ6daGGI4lVFGmQl0qna
+https://drive.google.com/open?id=1T7P5w_V5cMumeEoXs3WFituiiVGhGb3H
 
 ## Notes
 
